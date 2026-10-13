@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="A real-time birdsong spectrogram. Point your phone at the trees and see the song." />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f4f2ee" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f0f0e" media="(prefers-color-scheme: dark)" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Field Recorder" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Field Recorder</title>
+  </head>
+  <body>
+    <div class="app" id="app" data-state="idle">
+      <header class="masthead">
+        <h1 class="wordmark">Field Recorder</h1>
+        <p class="status" aria-live="polite">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span id="status-text">Ready</span>
+        </p>
+      </header>
+
+      <main class="stage" id="stage">
+        <canvas id="spectrogram" role="img" aria-label="Live spectrogram from 1 to 10 kilohertz"></canvas>
+        <div class="grid" id="freq-axis" aria-hidden="true"></div>
+        <div class="time-axis" id="time-axis" aria-hidden="true"></div>
+
+        <div class="peak" aria-hidden="true">
+          <span class="peak-label">Peak</span>
+          <span class="peak-value" id="peak">—</span>
+        </div>
+
+        <section class="intro" id="intro">
+          <p class="intro-kicker">1–10 kHz · live</p>
+          <h2 class="intro-title">See birdsong<br />as it happens.</h2>
+          <p class="intro-body">
+            A live spectrogram tuned to the range where most birds sing.
+            Nothing is recorded or uploaded — sound stays on your device.
+          </p>
+          <p class="intro-error" id="error" role="alert" hidden></p>
+        </section>
+      </main>
+
+      <aside class="panel" aria-label="Controls">
+        <button type="button" class="btn btn-primary" id="start">Start listening</button>
+
+        <div class="controls" id="controls">
+          <label class="slider" for="sensitivity">
+            <span class="slider-label">Sensitivity</span>
+            <input type="range" id="sensitivity" min="0" max="100" step="1" value="60" />
+            <output class="slider-value" id="sensitivity-value" for="sensitivity">60</output>
+          </label>
+
+          <div class="buttons">
+            <button type="button" class="btn" id="pause" aria-pressed="false">
+              <span class="btn-text">Pause</span><kbd>Space</kbd>
+            </button>
+            <button type="button" class="btn" id="clear">
+              <span class="btn-text">Clear</span><kbd>C</kbd>
+            </button>
+            <button type="button" class="btn" id="save">
+              <span class="btn-text">Save PNG</span><kbd>S</kbd>
+            </button>
+          </div>
+        </div>
+
+        <dl class="meta">
+          <div><dt>Range</dt><dd>1–10 kHz</dd></div>
+          <div><dt>Scale</dt><dd>Logarithmic</dd></div>
+          <div><dt>Sample rate</dt><dd id="meta-rate">—</dd></div>
+          <div><dt>Resolution</dt><dd id="meta-res">—</dd></div>
+        </dl>
+      </aside>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
